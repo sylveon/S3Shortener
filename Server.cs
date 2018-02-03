@@ -11,7 +11,6 @@ namespace Sylveon.S3Shortener
 {
     internal class Server
     {
-
         public void Configure(IApplicationBuilder app, IConfiguration config)
         {
             ConfigModel configModel = new ConfigModel();
@@ -43,10 +42,11 @@ namespace Sylveon.S3Shortener
                 };
                 await s3Client.PutObjectAsync(s3Object);
 
-                string response =
-                    "{'url':'" + (configModel.UseHTTPS ? "https://" : "http://") +
-                    configModel.Domain + "/" + s3Object.Key + "'}";
+                string protocol = configModel.UseHTTPS ? "https" : "http";
+                string domain = configModel.Domain ?? $"{configModel.Bucket}.s3.{s3Client.Config.RegionEndpoint.SystemName}.amazonaws.com";
+                string redirectUrl = $"{protocol}://{domain}/{s3Object.Key}";
 
+                string response = "{'url':'" + redirectUrl + "'}";
                 context.Response.ContentLength = response.Length;
                 context.Response.ContentType = "application/json";
                 await context.Response.WriteAsync(response);
