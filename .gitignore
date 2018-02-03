@@ -324,3 +324,6 @@ ASALocalRun/
 
 # Server configuration
 settings.json
+
+# VSCode workspace config
+.vscode/
