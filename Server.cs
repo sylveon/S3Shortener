@@ -20,8 +20,9 @@ namespace Sylveon.S3Shortener
             Environment.SetEnvironmentVariable("AWS_ACCESS_KEY_ID", config.GetSection("AWS").GetSection("Credentials")["AccessKey"], EnvironmentVariableTarget.Process);
             Environment.SetEnvironmentVariable("AWS_SECRET_ACCESS_KEY", config.GetSection("AWS").GetSection("Credentials")["SecretKey"], EnvironmentVariableTarget.Process);
 
-            var options = config.GetAWSOptions();
-            IAmazonS3 s3Client = options.CreateServiceClient<IAmazonS3>();
+            IAmazonS3 s3Client = config.GetAWSOptions().CreateServiceClient<IAmazonS3>();
+            string protocol = configModel.UseHTTPS ? "https" : "http";
+            string domain = configModel.Domain ?? $"{configModel.Bucket}.s3.{s3Client.Config.RegionEndpoint.SystemName}.amazonaws.com";
 
             app.Run(async context =>
             {
@@ -42,10 +43,7 @@ namespace Sylveon.S3Shortener
                 };
                 await s3Client.PutObjectAsync(s3Object);
 
-                string protocol = configModel.UseHTTPS ? "https" : "http";
-                string domain = configModel.Domain ?? $"{configModel.Bucket}.s3.{s3Client.Config.RegionEndpoint.SystemName}.amazonaws.com";
                 string redirectUrl = $"{protocol}://{domain}/{s3Object.Key}";
-
                 string response = "{'url':'" + redirectUrl + "'}";
                 context.Response.ContentLength = response.Length;
                 context.Response.ContentType = "application/json";

@@ -9,8 +9,8 @@ Create a `settings.json` file at the root of this repo following this format:
 ```json
 {
   "Settings": {
-    "Bucket": "short.charlesmilette.net", // Bucket name.
-    "Domain": "short.charlesmilette.net", // Domain to use. Ignore to use regular S3 endpoint.
+    "Bucket": "my-bucket", // Bucket name.
+    "Domain": "short.my-website.com", // Domain to use. Ignore to use regular S3 endpoint.
     "UseHTTPS": true // Set to false to return URLs with "http://"
   },
   "AWS": {
