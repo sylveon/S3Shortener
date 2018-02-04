@@ -1,5 +1,3 @@
-using Amazon;
-using Amazon.Extensions.NETCore.Setup;
 using Amazon.S3;
 using Amazon.S3.Model;
 using Microsoft.AspNetCore.Builder;

@@ -9,17 +9,20 @@ namespace Sylveon.S3Shortener
     {
         public static Task Main(string[] args) =>
             new WebHostBuilder()
-                .ConfigureAppConfiguration((_, config) =>
+                .ConfigureAppConfiguration(config =>
                 {
                     config.AddJsonFile("settings.json");
                 })
                 .UseKestrel(options =>
                 {
-                    options.Listen(IPAddress.Loopback, 5000, listenOptions =>
+                    options.Listen(IPAddress.Any, 5000, listenOptions =>
                     {
                         listenOptions.NoDelay = false;
                     });
+
+                    options.UseSystemd();
                 })
+                .UseLibuv()
                 .UseStartup<Server>()
                 .Build().RunAsync();
     }
