@@ -4,11 +4,13 @@ using Amazon.S3;
 using Amazon.S3.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Sylveon.S3Shortener.Attributes;
 using Sylveon.S3Shortener.Models;
 using Sylveon.S3Shortener.Utilities;
 
 namespace Sylveon.S3Shortener.Controllers
 {
+    [Secret(/* Add your secret here, or leave empty if you don't want one */)]
     [Route("[controller]")]
     public class ShortController : Controller
     {
