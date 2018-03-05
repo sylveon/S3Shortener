@@ -26,25 +26,26 @@ namespace Sylveon.S3Shortener.Controllers
         [HttpPost]
         public async Task<IActionResult> Shorten(string url)
         {
-            if (!(Uri.TryCreate(url, UriKind.Absolute, out var uri)
-                && (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)))
+            if (Uri.TryCreate(url, UriKind.Absolute, out var uri) && (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps))
+            {
+                var s3Object = new PutObjectRequest
+                {
+                    BucketName = _config.AWS.Bucket,
+                    Key = _rng.GetRandomLinkName(),
+                    WebsiteRedirectLocation = uri.AbsoluteUri
+                };
+
+                await _s3.PutObjectAsync(s3Object);
+
+                string protocol = _config.UseHTTPS ? "https" : "http";
+                string domain = _config.Domain ?? $"{_config.AWS.Bucket}.s3.{_s3.Config.RegionEndpoint.SystemName}.amazonaws.com";
+                string redirectUrl = $"{protocol}://{domain}/{s3Object.Key}";
+                return Json(new { url = redirectUrl });
+            }
+            else
             {
                 return StatusCode(400);
             }
-
-            var s3Object = new PutObjectRequest
-            {
-                BucketName = _config.AWS.Bucket,
-                Key = _rng.GetRandomLinkName(),
-                WebsiteRedirectLocation = url
-            };
-
-            await _s3.PutObjectAsync(s3Object);
-
-            string protocol = _config.UseHTTPS ? "https" : "http";
-            string domain = _config.Domain ?? $"{_config.AWS.Bucket}.s3.{_s3.Config.RegionEndpoint.SystemName}.amazonaws.com";
-            string redirectUrl = $"{protocol}://{domain}/{s3Object.Key}";
-            return Json(new { url = redirectUrl });
         }
     }
 }
