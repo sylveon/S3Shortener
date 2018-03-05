@@ -5,14 +5,14 @@ namespace Sylveon.S3Shortener.Attributes
 {
     public class SecretAttribute : ActionFilterAttribute
     {
-        protected string Secret { get; set; }
+        private readonly string _secret;
 
-        public SecretAttribute(string secret = null) => this.Secret = secret;
+        public SecretAttribute(string secret = null) => _secret = secret;
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             string auth = filterContext.HttpContext.Request.Headers["Authorization"];
-            if (string.IsNullOrEmpty(this.Secret) || (!string.IsNullOrEmpty(auth) && auth == this.Secret))
+            if (string.IsNullOrEmpty(_secret) || (!string.IsNullOrEmpty(auth) && auth == _secret))
             {
                 return;
             }
