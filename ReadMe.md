@@ -6,32 +6,28 @@ A small .NET Core app that allows you to use Amazon S3 as URL shortener for Shar
 
 Create a `settings.json` file at the root of this repo following this format:
 
-```json
+```javascript
 {
-  "Settings": {
-    "Bucket": "my-bucket", // Bucket name.
-    "Domain": "short.my-website.com", // Domain to use. Ignore to use regular S3 endpoint.
-    "UseHTTPS": true // Set to false to return URLs with "http://"
-  },
+  "Domain": "short.my-website.com", // Domain to use. Ignore to use regular S3 endpoint.
+  "UseHTTPS": true, // Set to false to return URLs with "http://"
   "AWS": {
+    "Bucket": "my-bucket", // Bucket name.
     "Region": "aws-region-descriptor", // For example "us-east-1"
-    "Credentials": {
-      "AccessKey": "my-access-key", // Get those from IAM
-      "SecretKey": "my-secret-key"
-    }
+    "AccessKey": "my-access-key", // Get those from IAM
+    "SecretKey": "my-secret-key"
   }
 }
 ```
 
 You can use the following custom uploader for ShareX configuration:
 
-```json
+```javascript
 {
   "Name": "Amazon S3",
   "DestinationType": "URLShortener",
-  "RequestType": "GET",
-  "RequestURL": "http://localhost:5000/", // Change this to point to your own instance
-  "Headers": {
+  "RequestType": "POST",
+  "RequestURL": "http://localhost:5000/short", // Change this to point to your own instance
+  "Arguments": {
     "url": "$input$"
   },
   "URL": "$json:url$"
