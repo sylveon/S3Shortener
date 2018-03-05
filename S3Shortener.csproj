@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AWSSDK.Core" Version="3.3.21.9" />
     <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.3.4" />
     <PackageReference Include="AWSSDK.S3" Version="3.3.16.2" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="2.0.1" />
@@ -15,6 +14,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>

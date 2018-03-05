@@ -3,6 +3,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace Sylveon.S3Shortener
 {
@@ -15,6 +16,10 @@ namespace Sylveon.S3Shortener
                     config
                         .SetBasePath(Path.GetDirectoryName(typeof(Program).Assembly.Location))
                         .AddJsonFile("settings.json");
+                })
+                .ConfigureLogging(logging =>
+                {
+                    logging.AddConsole();
                 })
                 .UseKestrel(options =>
                 {

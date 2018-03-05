@@ -26,7 +26,7 @@ namespace Sylveon.S3Shortener.Controllers
         [HttpPost]
         public async Task<IActionResult> Shorten(Uri url)
         {
-            if (url != null && (url.Scheme == Uri.UriSchemeHttp || url.Scheme == Uri.UriSchemeHttps))
+            if (url != null && url.IsAbsoluteUri && (url.Scheme == Uri.UriSchemeHttp || url.Scheme == Uri.UriSchemeHttps))
             {
                 var s3Object = new PutObjectRequest
                 {
