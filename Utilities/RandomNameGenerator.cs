@@ -18,9 +18,10 @@ namespace Sylveon.S3Shortener.Utilities
 
         public string GetRandomLinkName()
         {
-            return CultureInfo.InvariantCulture.TextInfo.ToTitleCase(_adjectives[_random.Next(0,_adjectives.Length)]) +
-                   CultureInfo.InvariantCulture.TextInfo.ToTitleCase(_adjectives[_random.Next(0,_adjectives.Length)]) +
-                   CultureInfo.InvariantCulture.TextInfo.ToTitleCase(_animals[_random.Next(0,_animals.Length)]);
+            return
+                CultureInfo.InvariantCulture.TextInfo.ToTitleCase(_adjectives[_random.Next(0,_adjectives.Length)]) +
+                CultureInfo.InvariantCulture.TextInfo.ToTitleCase(_adjectives[_random.Next(0,_adjectives.Length)]) +
+                CultureInfo.InvariantCulture.TextInfo.ToTitleCase(_animals[_random.Next(0,_animals.Length)]);
         }
     }
 }

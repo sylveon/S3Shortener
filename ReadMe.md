@@ -1,6 +1,6 @@
 # S3Shortener
 
-A small .NET Core app that allows you to use Amazon S3 as URL shortener for ShareX.
+A small ASP.NET Core app that allows you to use Amazon S3 as URL shortener for ShareX.
 
 ## Configuration
 
