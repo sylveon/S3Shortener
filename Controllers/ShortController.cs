@@ -24,15 +24,15 @@ namespace Sylveon.S3Shortener.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Shorten(string url)
+        public async Task<IActionResult> Shorten(Uri url)
         {
-            if (Uri.TryCreate(url, UriKind.Absolute, out var uri) && (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps))
+            if (url != null && (url.Scheme == Uri.UriSchemeHttp || url.Scheme == Uri.UriSchemeHttps))
             {
                 var s3Object = new PutObjectRequest
                 {
                     BucketName = _config.AWS.Bucket,
                     Key = _rng.GetRandomLinkName(),
-                    WebsiteRedirectLocation = uri.AbsoluteUri
+                    WebsiteRedirectLocation = url.AbsoluteUri
                 };
 
                 await _s3.PutObjectAsync(s3Object);
