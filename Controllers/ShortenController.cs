@@ -12,13 +12,13 @@ namespace Sylveon.S3Shortener.Controllers
 {
     [Secret(/* Add your secret here, or leave empty if you don't want one */)]
     [Route("[controller]")]
-    public class ShortController : Controller
+    public class ShortenController : Controller
     {
         private readonly RandomNameGenerator _rng;
         private readonly IAmazonS3 _s3;
         private readonly RootConfigModel _config;
 
-        public ShortController(RandomNameGenerator rng, IAmazonS3 s3, IConfiguration config)
+        public ShortenController(RandomNameGenerator rng, IAmazonS3 s3, IConfiguration config)
         {
             _rng = rng;
             _s3 = s3;
@@ -26,7 +26,7 @@ namespace Sylveon.S3Shortener.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Shorten(Uri url)
+        public async Task<IActionResult> Index(Uri url)
         {
             if (url != null && url.IsAbsoluteUri && (url.Scheme == Uri.UriSchemeHttp || url.Scheme == Uri.UriSchemeHttps))
             {

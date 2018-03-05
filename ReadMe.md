@@ -26,7 +26,7 @@ You can use the following custom uploader for ShareX configuration:
   "Name": "Amazon S3",
   "DestinationType": "URLShortener",
   "RequestType": "POST",
-  "RequestURL": "http://localhost:5000/short", // Change this to point to your own instance
+  "RequestURL": "http://localhost:5000/shorten", // Change this to point to your own instance
   "Arguments": {
     "url": "$input$"
   },
