@@ -12,7 +12,7 @@ Create a `settings.json` file at the root of this repo following this format:
   "UseHTTPS": true, // Set to false to return URLs with "http://"
   "AWS": {
     "Bucket": "my-bucket", // Bucket name.
-    "Region": "aws-region-descriptor", // For example "us-east-1"
+    "Region": "aws-region-descriptor", // For example "ca-central-1". Defaults to "us-east-1"
     "AccessKey": "my-access-key", // Get those from IAM
     "SecretKey": "my-secret-key"
   }

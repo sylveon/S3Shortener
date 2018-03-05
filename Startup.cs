@@ -41,7 +41,7 @@ namespace Sylveon.S3Shortener
                 .AddAWSService<IAmazonS3>(new AWSOptions
                 {
                     Credentials = new BasicAWSCredentials(_config.AWS.AccessKey, _config.AWS.SecretKey),
-                    Region = RegionEndpoint.GetBySystemName(_config.AWS.Region)
+                    Region = RegionEndpoint.GetBySystemName(_config.AWS.Region ?? RegionEndpoint.USEast1.SystemName)
                 })
                 .AddSingleton<RandomNameGenerator>(new RandomNameGenerator(data))
                 .AddMvc();
