@@ -1,7 +1,9 @@
-﻿using System.Net;
+﻿using System.IO;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace Sylveon.S3Shortener
 {
@@ -11,11 +13,17 @@ namespace Sylveon.S3Shortener
             new WebHostBuilder()
                 .ConfigureAppConfiguration(config =>
                 {
-                    config.AddJsonFile("settings.json");
+                    config
+                        .SetBasePath(Path.GetDirectoryName(typeof(Program).Assembly.Location))
+                        .AddJsonFile("settings.json");
+                })
+                .ConfigureLogging(logging =>
+                {
+                    logging.AddConsole();
                 })
                 .UseKestrel(options =>
                 {
-                    options.Listen(IPAddress.Any, 5000, listenOptions =>
+                    options.Listen(IPAddress.Loopback, 5000, listenOptions =>
                     {
                         listenOptions.NoDelay = false;
                     });
@@ -23,7 +31,7 @@ namespace Sylveon.S3Shortener
                     options.UseSystemd();
                 })
                 .UseLibuv()
-                .UseStartup<Server>()
+                .UseStartup<Startup>()
                 .Build().RunAsync();
     }
 }
